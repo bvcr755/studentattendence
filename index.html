@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>College Attendance</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07070a;--text:#f5f5f7;--muted:#9a9aa3;--glass:rgba(255,255,255,.06);--glass2:rgba(255,255,255,.1);--line:rgba(255,255,255,.14);--green:#2ee59d;--red:#ff5c6c;--shadow:0 10px 40px rgba(0,0,0,.5);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;
+background-image:radial-gradient(circle at 15% 10%,rgba(255,255,255,.09),transparent 40%),radial-gradient(circle at 85% 90%,rgba(190,190,210,.08),transparent 45%);background-attachment:fixed}
+.glass{background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.03));border:1px solid var(--line);border-radius:20px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.18);transition:transform .25s,background .25s,border-color .25s}
+.glass.hov:hover{transform:translateY(-3px);background:var(--glass2);border-color:rgba(255,255,255,.28)}
+.muted{color:var(--muted)}.g{color:var(--green)}.r{color:var(--red)}
+button{font:inherit;cursor:pointer;color:inherit}
+.hidden{display:none!important}
+.fade{animation:fade .45s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* Login */
+#login{min-height:100vh;display:grid;place-items:center;padding:20px}
+.lbox{width:100%;max-width:420px;padding:36px 30px}
+.logo{width:54px;height:54px;border-radius:16px;border:1px solid var(--line);display:grid;place-items:center;font-size:26px;background:var(--glass2);margin-bottom:18px}
+h1{font-size:26px;font-weight:700;letter-spacing:-.5px}
+.tabs{display:flex;gap:6px;padding:5px;margin:24px 0 18px;background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:14px}
+.tab{flex:1;padding:10px;border:0;background:none;border-radius:10px;color:var(--muted);font-weight:500;transition:.25s}
+.tab.on{background:var(--text);color:#000}
+label{display:block;font-size:12px;color:var(--muted);margin:14px 0 6px;letter-spacing:.5px;text-transform:uppercase}
+input,select{width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.35);color:var(--text);font:inherit;outline:none;transition:.2s}
+input:focus,select:focus{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.1)}
+select option{background:#111}
+.btn{width:100%;padding:14px;margin-top:22px;border:0;border-radius:12px;background:var(--text);color:#000;font-weight:600;transition:.25s;display:flex;justify-content:center;gap:10px;align-items:center}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,255,255,.2)}
+.err{margin-top:16px;padding:11px 14px;border-radius:12px;font-size:13px;color:var(--red);background:rgba(255,92,108,.1);border:1px solid rgba(255,92,108,.35)}
+.spin{width:16px;height:16px;border:2px solid #0004;border-top-color:#000;border-radius:50%;animation:spin .7s linear infinite}
+/* App shell */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 22px;margin:14px;border-radius:18px}
+header b{font-size:17px}header small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.out{padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--glass);transition:.2s}
+.out:hover{background:var(--glass2);border-color:#fff}
+nav{display:flex;gap:8px;overflow-x:auto;padding:0 14px 6px}
+nav button{white-space:nowrap;padding:10px 20px;border-radius:999px;border:1px solid var(--line);background:var(--glass);color:var(--muted);transition:.25s}
+nav button:hover{color:#fff}nav button.on{background:var(--text);color:#000;border-color:var(--text);font-weight:600}
+main{max-width:1050px;margin:0 auto;padding:14px}
+h2{font-size:20px;margin:6px 0 16px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{padding:22px}
+.hero{display:flex;align-items:center;gap:30px;flex-wrap:wrap;padding:28px;margin-bottom:16px}
+.ring{position:relative;width:150px;height:150px}.ring svg{transform:rotate(-90deg)}
+.ring .v{position:absolute;inset:0;display:grid;place-items:center;font-size:34px;font-weight:700}
+.stats{display:flex;gap:14px;flex-wrap:wrap;flex:1}
+.stat{flex:1;min-width:100px;padding:16px;border-radius:14px;background:rgba(0,0,0,.3);border:1px solid var(--line)}
+.stat b{font-size:26px;display:block}.stat span{font-size:12px;color:var(--muted)}
+.bar{height:8px;border-radius:8px;background:rgba(255,255,255,.1);overflow:hidden;margin:12px 0}
+.bar i{display:block;height:100%;border-radius:8px;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.row{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:14px}
+.pill{padding:5px 12px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:.6px}
+.pill.P{color:var(--green);background:rgba(46,229,157,.12);border:1px solid rgba(46,229,157,.4)}
+.pill.A{color:var(--red);background:rgba(255,92,108,.12);border:1px solid rgba(255,92,108,.4)}
+.rec{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 20px;margin-bottom:10px;flex-wrap:wrap}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+/* Marking */
+.ctl{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;padding:18px}.ctl>div{flex:1;min-width:150px}.ctl label{margin-top:0}
+.stu{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 20px;margin-bottom:10px}
+.sel{display:flex;gap:10px}
+.sb{padding:12px 22px;min-width:130px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.3);color:var(--muted);font-weight:600;transition:.2s}
+.sb:hover{transform:translateY(-2px);color:#fff}
+.sb.P.on{background:var(--green);border-color:var(--green);color:#04170f;box-shadow:0 0 22px rgba(46,229,157,.4)}
+.sb.A.on{background:var(--red);border-color:var(--red);color:#1d0408;box-shadow:0 0 22px rgba(255,92,108,.4)}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:13px 18px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+.wrap{overflow-x:auto}
+#toast{position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom,0px));transform:translate(-50%,120px);padding:14px 24px;border-radius:14px;transition:.4s;z-index:20;background:rgba(20,20,24,.85);display:flex;gap:10px;align-items:center}
+#toast.show{transform:translate(-50%,0)}
+@media(max-width:600px){.hero{justify-content:center}.sb{min-width:0;flex:1}.sel{width:100%}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<section id="login">
+  <div class="glass lbox fade">
+    <div class="logo">🎓</div>
+    <h1>College Attendance</h1>
+    <p class="muted" style="margin-top:6px;font-size:14px">Sign in to continue</p>
+    <div class="tabs">
+      <button class="tab on" data-role="student">Student Login</button>
+      <button class="tab" data-role="faculty">Faculty Login</button>
+    </div>
+    <label>Username</label><input id="u" autocomplete="off" placeholder="Enter username">
+    <label>PIN</label><input id="p" type="password" autocomplete="off" placeholder="Enter PIN">
+    <div id="err" class="err hidden"></div>
+    <button class="btn" id="go">Sign In</button>
+  </div>
+</section>
+
+<!-- APP -->
+<section id="app" class="hidden">
+  <header class="glass"><div><b>College Attendance</b><small id="who"></small></div><button class="out" id="logout">Logout</button></header>
+  <nav id="nav"></nav>
+  <main id="view"></main>
+</section>
+<div id="toast" class="glass"></div>
+
+<script>
+/* ============ DATA ============ */
+const STUDENTS=[["Hemanth","256M5A5401"],["Prasanna Kumar","256M5A5402"],["Tanu Sri","256M5A5403"],["Vishnu","256M5A5404"],["Kailash","256M5A5405"],["Prasanna","256M5A5406"],["Pavan","256M5A5407"],["Charan","256M5A5408"],["Swarna","256M5A5409"]].map(([name,pin])=>({name,pin}));
+const FACULTY=[["Karthik","DS01","Data Science"],["Prasad","DS02","EDVC"],["Rakesh","DS03","DWDM"],["Nagesh","DS04","IOT"],["Saila Bhanu","DS05","PML"]].map(([name,pin,subject])=>({name,pin,subject}));
+const SUBJECTS=FACULTY.map(f=>f.subject);
+const KEY="college_attendance_v1";
+/* ============ TIMETABLE (III AIDS, w.e.f 29-06-2026) ============ */
+const TIMES=["9:30–10:30","10:30–11:30","11:45–12:45","1:30–2:30","2:30–3:30","3:30–4:30"];
+const DAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+// key = weekday (1=Mon..6=Sat); index 0..5 = periods 1..6. Labs count under the faculty's subject.
+const TT={1:["PML","Data Science","IOT","EDVC","EDVC","EDVC"],
+2:["Data Science","PML","IOT","IOT","DWDM",null],
+3:["DWDM","DWDM","DWDM","PML","Data Science","IOT"],
+4:["PML","DWDM",null,null,null,null],
+5:["DWDM",null,"PML","Data Science","Data Science","Data Science"],
+6:[null,null,null,"DWDM","Data Science","IOT"]};
+const slots=(sub,date)=>(TT[new Date(date+"T00:00:00").getDay()]||[]).map((x,i)=>x===sub?i+1:0).filter(Boolean);
+
+/* ============ STORAGE ============ */
+let mem=[];
+const load=()=>{try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return mem}};
+const save=d=>{mem=d;try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}};
+
+/* ============ HELPERS ============ */
+const $=s=>document.querySelector(s);
+const pct=(p,t)=>t?Math.round(p/t*100):0;
+const col=p=>p>=75?"var(--green)":"var(--red)";
+const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const fmt=d=>new Date(d+"T00:00:00").toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"});
+const monthName=m=>new Date(m+"-01T00:00:00").toLocaleDateString("en-GB",{month:"long",year:"numeric"});
+const count=a=>{const p=a.filter(r=>r.status==="Present").length;return{p,a:a.length-p,t:a.length,pc:pct(p,a.length)}};
+function toast(msg){const t=$("#toast");t.innerHTML='<span class="g">✔</span> '+msg;t.classList.add("show");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove("show"),2800)}
+const barHTML=p=>`<div class="bar"><i style="width:0;background:${col(p)}" data-w="${p}"></i></div>`;
+const animate=()=>requestAnimationFrame(()=>setTimeout(()=>document.querySelectorAll("[data-w]").forEach(e=>e.style.width=e.dataset.w+"%"),30));
+
+/* ============ LOGIN ============ */
+let role="student",user=null,tab="";
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+  role=b.dataset.role;document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x===b));$("#err").classList.add("hidden")});
+["u","p"].forEach(id=>$("#"+id).addEventListener("keydown",e=>e.key==="Enter"&&$("#go").click()));
+$("#go").onclick=()=>{
+  const u=$("#u").value.trim().toLowerCase(),p=$("#p").value.trim().toUpperCase();
+  const btn=$("#go");btn.innerHTML='<span class="spin"></span> Verifying…';
+  setTimeout(()=>{
+    btn.textContent="Sign In";
+    const list=role==="student"?STUDENTS:FACULTY;
+    const m=list.find(x=>x.name.toLowerCase()===u&&x.pin.toUpperCase()===p);
+    if(!m){const e=$("#err");e.textContent="Invalid username or PIN for "+role+" login. Please check your credentials and try again.";e.classList.remove("hidden");return}
+    user={...m,role};$("#u").value=$("#p").value="";$("#err").classList.add("hidden");start();
+  },600);
+};
+$("#logout").onclick=()=>{user=null;$("#app").classList.add("hidden");$("#login").classList.remove("hidden")};
+
+/* ============ SHELL ============ */
+const NAVS={student:["Overview","Period Wise","Month Wise","Subject Wise"],faculty:["Dashboard","Mark Attendance","Attendance Summary"]};
+function start(){
+  $("#login").classList.add("hidden");$("#app").classList.remove("hidden");
+  $("#who").textContent=user.role==="student"?`${user.name} · Roll No: ${user.pin}`:`${user.name} · ${user.subject}`;
+  $("#nav").innerHTML=NAVS[user.role].map(n=>`<button>${n}</button>`).join("");
+  [...$("#nav").children].forEach(b=>b.onclick=()=>go(b.textContent));
+  go(NAVS[user.role][0]);
+}
+function go(t){
+  tab=t;[...$("#nav").children].forEach(b=>b.classList.toggle("on",b.textContent===t));
+  const v=$("#view");v.innerHTML="";v.className="fade";void v.offsetWidth;
+  const data=load();
+  const fn={"Overview":sOverview,"Period Wise":sPeriod,"Month Wise":sMonth,"Subject Wise":sSubject,"Dashboard":fDash,"Mark Attendance":fMark,"Attendance Summary":fSummary}[t];
+  v.innerHTML=fn(data);animate();if(t==="Mark Attendance")bindMark();
+}
+const mine=d=>d.filter(r=>r.pin===user.pin);
+const none='<div class="glass empty">No attendance has been recorded yet.</div>';
+
+/* ============ STUDENT VIEWS (read-only) ============ */
+function sOverview(d){
+  const c=count(mine(d)),C=2*Math.PI*60;
+  return `<h2>Overall Attendance</h2>
+  <div class="glass hero">
+    <div class="ring"><svg width="150" height="150"><circle cx="75" cy="75" r="60" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="12"/>
+    <circle cx="75" cy="75" r="60" fill="none" stroke="${col(c.pc)}" stroke-width="12" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}" style="transition:stroke-dashoffset 1.2s ease"><animate attributeName="stroke-dashoffset" from="${C}" to="${C*(1-c.pc/100)}" dur="1.2s" fill="freeze"/></circle></svg><div class="v">${c.pc}%</div></div>
+    <div class="stats"><div class="stat"><b class="g">${c.p}</b><span>Present</span></div><div class="stat"><b class="r">${c.a}</b><span>Absent</span></div><div class="stat"><b>${c.t}</b><span>Total Classes</span></div></div>
+  </div>
+  <p class="muted" style="font-size:13px">Your attendance is view-only. Faculty members update it for their subjects.</p>`;
+}
+function sPeriod(d){
+  const r=mine(d).sort((a,b)=>b.date.localeCompare(a.date)||a.period-b.period);
+  return `<h2>Period Wise Attendance</h2>`+(r.length?r.map(x=>`<div class="glass hov rec"><div><b>${fmt(x.date)}</b><div class="muted" style="font-size:13px;margin-top:3px">${x.subject} · Period ${x.period} · ${TIMES[x.period-1]||""}</div></div><span class="pill ${x.status[0]}">${x.status.toUpperCase()}</span></div>`).join(""):none);
+}
+function sMonth(d){
+  const r=mine(d),ms=[...new Set(r.map(x=>x.date.slice(0,7)))].sort().reverse();
+  return `<h2>Month Wise Attendance</h2>`+(ms.length?`<div class="grid">`+ms.map(m=>{const c=count(r.filter(x=>x.date.startsWith(m)));
+  return `<div class="glass hov card"><div class="row"><b>${monthName(m)}</b><b style="color:${col(c.pc)}">${c.pc}%</b></div>${barHTML(c.pc)}<div class="row muted"><span>Present: <b class="g">${c.p}</b></span><span>Absent: <b class="r">${c.a}</b></span><span>Total: ${c.t}</span></div></div>`}).join("")+`</div>`:none);
+}
+function sSubject(d){
+  const r=mine(d);
+  return `<h2>Subject Wise Attendance</h2><div class="grid">`+FACULTY.map(f=>{const c=count(r.filter(x=>x.subject===f.subject));
+  return `<div class="glass hov card"><div class="row"><b style="font-size:17px">${f.subject}</b><b style="color:${col(c.pc)}">${c.pc}%</b></div><div class="muted" style="font-size:13px;margin-top:3px">Faculty: ${f.name}</div>${barHTML(c.pc)}<div class="row muted"><span>Present: <b class="g">${c.p}</b></span><span>Absent: <b class="r">${c.a}</b></span><span>Total: ${c.t}</span></div></div>`}).join("")+`</div>`;
+}
+
+/* ============ FACULTY VIEWS ============ */
+const subj=d=>d.filter(r=>r.subject===user.subject&&r.faculty===user.name);
+function fDash(d){
+  const s=subj(d),sessions=new Set(s.map(r=>r.date+"|"+r.period)).size,td=s.filter(r=>r.date===today());
+  return `<div class="glass hero"><div><p class="muted">Welcome</p><h1 style="font-size:34px;margin:4px 0 12px">${user.name}</h1><p class="muted" style="font-size:12px;text-transform:uppercase;letter-spacing:.5px">Subject</p><p style="font-size:20px;font-weight:600">${user.subject}</p></div>
+  <div class="stats"><div class="stat"><b>${fmt(today())}</b><span>Today</span></div><div class="stat"><b>${sessions}</b><span>Classes Marked</span></div><div class="stat"><b>${new Set(td.map(r=>r.period)).size}</b><span>Marked Today</span></div></div></div>
+  <div class="glass card" style="margin-bottom:16px"><b>Today's Periods · ${DAYS[new Date().getDay()]}</b><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">${slots(user.subject,today()).map(n=>`<span class="pill P" style="color:#fff;background:var(--glass2);border-color:var(--line)">Period ${n} · ${TIMES[n-1]}</span>`).join("")||'<span class="muted">No classes for your subject today.</span>'}</div></div>
+  <button class="btn" style="max-width:260px" onclick="go('Mark Attendance')">Mark Attendance →</button>`;
+}
+function fMark(d){
+  return `<h2>Mark Attendance · ${user.subject}</h2>
+  <div class="glass ctl"><div><label>Date</label><input type="date" id="md" value="${today()}"></div>
+  <div><label>Period (from timetable)</label><select id="mp"></select></div></div>
+  <div id="list"></div><div id="acts" style="display:flex;gap:12px;flex-wrap:wrap"></div>`;
+}
+let sel={},editing=false;
+function bindMark(){
+  const paint=()=>document.querySelectorAll(".sb").forEach(b=>{const on=sel[b.dataset.pin]===b.dataset.st;b.classList.toggle("on",on);
+    b.textContent=on?(b.dataset.st==="Present"?"✓ PRESENT":"✕ ABSENT"):(b.dataset.st==="Present"?"🟢 PRESENT":"🔴 ABSENT")});
+  const done=(d,date,p)=>d.some(r=>r.subject===user.subject&&r.date===date&&r.period===p);
+  // Period dropdown from timetable; periods already submitted get a tick
+  const fill=keep=>{const date=$("#md").value,cur=keep?$("#mp").value:"",d=load();
+    $("#mp").innerHTML=(date?slots(user.subject,date):[]).map(n=>`<option value="${n}" ${String(n)===cur?"selected":""}>Period ${n} · ${TIMES[n-1]}${done(d,date,n)?" ✓ Submitted":""}</option>`).join("")};
+  const draw=()=>{
+    const date=$("#md").value,acts=$("#acts"),list=$("#list");
+    if(!date||!$("#mp").value){
+      list.innerHTML=`<div class="glass empty">No ${user.subject} class on ${date?DAYS[new Date(date+"T00:00:00").getDay()]:"this day"} as per the timetable. Pick another date.</div>`;acts.innerHTML="";return}
+    const period=+$("#mp").value,d=load(),saved=d.filter(r=>r.subject===user.subject&&r.date===date&&r.period===period);
+    sel={};saved.forEach(r=>sel[r.pin]=r.status);
+    if(saved.length&&!editing){ // LOCKED: already submitted -> read-only + Edit / Next
+      list.innerHTML=`<div class="glass card" style="margin-bottom:12px;border-color:rgba(46,229,157,.45)"><span class="g">✔</span> Attendance submitted for Period ${period} · ${TIMES[period-1]}. Wrong entry? Use Edit Attendance.</div>`+
+        STUDENTS.map((s,i)=>`<div class="glass stu"><div><b>${i+1}. ${s.name}</b><div class="muted" style="font-size:12px;margin-top:2px">${s.pin}</div></div><span class="pill ${sel[s.pin][0]}">${sel[s.pin].toUpperCase()}</span></div>`).join("");
+      const i=$("#mp").selectedIndex,next=$("#mp").options[i+1];
+      acts.innerHTML=`<button class="btn" id="edit" style="max-width:240px;background:var(--glass2);color:#fff;border:1px solid var(--line)">✎ Edit Attendance</button>`+
+        (next?`<button class="btn" id="next" style="max-width:240px">Next Period →</button>`:`<span class="muted" style="align-self:end;padding-bottom:14px">All your periods for this day are done ✓</span>`);
+      $("#edit").onclick=()=>{editing=true;draw()};
+      if(next)$("#next").onclick=()=>{$("#mp").selectedIndex=i+1;editing=false;draw()};
+      return}
+    list.innerHTML=STUDENTS.map((s,i)=>`<div class="glass stu"><div><b>${i+1}. ${s.name}</b><div class="muted" style="font-size:12px;margin-top:2px">${s.pin}</div></div><div class="sel">
+      <button class="sb P" data-pin="${s.pin}" data-st="Present">🟢 PRESENT</button><button class="sb A" data-pin="${s.pin}" data-st="Absent">🔴 ABSENT</button></div></div>`).join("");
+    acts.innerHTML=`<button class="btn" id="save" style="max-width:300px">${editing?"UPDATE ATTENDANCE":"SAVE ATTENDANCE"}</button>`+(editing?`<button class="btn" id="cancel" style="max-width:160px;background:var(--glass2);color:#fff;border:1px solid var(--line)">Cancel</button>`:"");
+    if(editing)$("#cancel").onclick=()=>{editing=false;draw()};
+    $("#save").onclick=()=>{
+      if(!slots(user.subject,date).includes(period))return toast("This period is not in your timetable.");
+      if(STUDENTS.some(s=>!sel[s.pin]))return toast("Mark all 9 students before saving.");
+      const was=editing;
+      let all=load().filter(r=>!(r.subject===user.subject&&r.date===date&&r.period===period));
+      STUDENTS.forEach(s=>all.push({student:s.name,pin:s.pin,subject:user.subject,faculty:user.name,date,period,status:sel[s.pin]}));
+      save(all);toast(was?"Attendance updated successfully.":"Attendance saved successfully.");
+      editing=false;fill(true);draw();
+    };
+    paint();
+  };
+  $("#list").onclick=e=>{const b=e.target.closest(".sb");if(!b)return;sel[b.dataset.pin]=b.dataset.st;paint()};
+  $("#md").onchange=()=>{editing=false;fill(false);draw()};
+  $("#mp").onchange=()=>{editing=false;draw()};
+  editing=false;fill(false);draw();
+}
+function fSummary(d){
+  const s=subj(d);
+  return `<h2>Attendance Summary · ${user.subject}</h2>`+(s.length?`<div class="glass wrap"><table><tr><th>Student</th><th>Present</th><th>Absent</th><th>Total</th><th>%</th></tr>`+STUDENTS.map(st=>{const c=count(s.filter(r=>r.pin===st.pin));
+  return `<tr><td><b>${st.name}</b></td><td class="g">${c.p}</td><td class="r">${c.a}</td><td>${c.t}</td><td style="color:${col(c.pc)};font-weight:600">${c.pc}%</td></tr>`}).join("")+`</table></div>`:none);
+}
+</script>
+</body>
+</html>
